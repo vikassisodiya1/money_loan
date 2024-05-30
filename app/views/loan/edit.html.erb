@@ -1,0 +1,23 @@
+<h1>Request Loan</h1>
+
+<%= form_for @loan, url: loan_path, method: :patch do |f| %>
+
+  <div class="field">
+    <%= f.label :amount, "Loan Amount:" %><br />
+    <%= number_to_currency(@loan.amount, disabled: true) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :interest_rate, "Interest Rate (%):" %><br />
+    <%= f.number_field :interest_rate, min: 0.01, step: 0.01, placeholder: "Enter interest rate", class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.radio_button :state, 'approved' %> 
+    <%= f.label :state, 'approved' %>
+    <%= f.radio_button :state, 'rejected' %>
+    <%= f.label :state, 'reject' %>
+  </div>
+
+  <%= f.submit "Submit", class: "btn btn-primary" %>
+<% end %>

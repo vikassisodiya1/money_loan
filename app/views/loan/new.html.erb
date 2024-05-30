@@ -1,0 +1,12 @@
+<h1>Request Loan</h1>
+
+<%= form_for @loan, url: '/loan', method: :post do |f| %>
+
+  <div class="field">
+    <%= f.label :amount, "Loan Amount:" %><br />
+    <%= f.number_field :amount, min: 100, placeholder: "Enter your loan amount" %>
+    <%= f.hidden_field :state,value: "requested" %>
+  </div>
+
+  <%= f.submit "Submit Loan Request" %>
+<% end %>

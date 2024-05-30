@@ -1,0 +1,30 @@
+<div class="loans-container">
+  <h1>Your Loans</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Amount</th>
+        <th>State</th>
+        <th>Created At</th>
+        <th>User name</th>
+        <th>Not approved</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @loan_requests.each do |request| %>
+        <tr>
+          <td><%= number_to_currency(request.amount) %></td>
+          <td><%= request.state.humanize %></td>
+          <td><%= request.created_at.strftime("%Y-%m-%d") %></td>
+          <td><%= request.user.first_name%></td>
+          <td>
+            <% if request.state == "requested" %>
+              <%= link_to "Approve/reject", edit_loan_path(request), method: :get, class: "btn btn-success" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

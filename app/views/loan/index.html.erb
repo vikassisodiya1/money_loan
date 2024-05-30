@@ -1,0 +1,71 @@
+<div class="loans-container">
+  <h1>Your Loans</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Amount</th>
+        <th>Interest Rate</th>
+        <th>Total Loan Amount</th>
+        <th>State</th>
+        <th>Paid</th>
+        <th>Created At</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @loans.each do |loan| %>
+        <tr>
+          <td><%= number_to_currency(loan.amount) %></td>
+          <td><%= loan.interest_rate %>%</td>
+          <td><%= number_to_currency(loan.total_loan_amount) %></td>
+          <td><%= loan.state.humanize %></td>
+          <td><%= loan.paid? ? "Yes" : "No" %></td>
+          <td><%= loan.created_at.strftime("%Y-%m-%d") %></td>
+          <td>
+            <% if loan.state == "approved" %>
+              <%= form_for loan, url: loan_path(loan), method: :patch do |f| %>
+                <div class="form-group">
+                  <%= f.label :interest_rate, "Interest Rate (%):" %>
+                  <%= f.text_field :interest_rate, readonly: true, value: loan.interest_rate %>
+                </div>
+                <%= f.radio_button :state, 'open' %>
+                <%= f.label :state, 'Confirm' %>
+                <%= f.radio_button :state, 'rejected' %>
+                <%= f.label :state, 'Reject' %>
+                <%= f.submit "Confirm", class: "btn btn-primary" %>
+              <% end %>
+            <% elsif loan.state == "open" %>
+              <%= form_for loan, url: loan_path(loan), method: :patch do |f| %>
+                <%= f.hidden_field :state, value: "closed" %>
+                <%= f.submit "Pay", class: "btn btn-primary" %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h1>Transaction History</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Amount</th>
+        <th>Transaction Type</th>
+        <th>Loan ID</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @transactions.each do |transaction| %>
+        <tr>
+          <td><%= number_to_currency(transaction.amount) %></td>
+          <td><%= transaction.transaction_type.humanize %></td>
+          <td><%= transaction.loan_id %></td>
+          <td><%= transaction.created_at.strftime("%Y-%m-%d") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

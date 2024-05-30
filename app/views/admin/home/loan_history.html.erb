@@ -1,0 +1,51 @@
+<div class="admin-home-container">
+  <h1>All Loans</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Amount</th>
+        <th>Interest Rate</th>
+        <th>Total Loan Amount</th>
+        <th>State</th>
+        <th>Paid</th>
+        <th>User</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @loans.each do |loan| %>
+        <tr>
+          <td><%= number_to_currency(loan.amount) %></td>
+          <td><%= loan.interest_rate %>%</td>
+          <td><%= number_to_currency(loan.total_loan_amount) %></td>
+          <td><%= loan.state.humanize %></td>
+          <td><%= loan.paid? ? "Yes" : "No" %></td>
+          <td><%= loan.user.email %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h1>All Transactions</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Amount</th>
+        <th>Transaction Type</th>
+        <th>User</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @transactions.each do |transaction| %>
+        <tr>
+          <td><%= number_to_currency(transaction.amount) %></td>
+          <td><%= transaction.transaction_type.humanize %></td>
+          <td><%= transaction.user.email %></td>
+          <td><%= transaction.created_at.strftime("%Y-%m-%d") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,11 @@
+# config/sidekiq-cron.yml
+
+calculate_interest:
+  cron: "*/5 * * * *"  # Run every 5 minutes
+  class: "CalculateInterestJob"
+  queue: default
+
+debit_user_wallet:
+  cron: "*/5 * * * *"  # Run every 5 minutes
+  class: "DebitUserWalletJob"
+  queue: default
