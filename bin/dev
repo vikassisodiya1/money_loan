@@ -1,9 +1,11 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
-# Load environment variables from .env file
-if [ -f .env ]; then
-  export $(cat .env | xargs)
+if gem list --no-installed --exact --silent foreman; then
+  echo "Installing foreman..."
+  gem install foreman
 fi
 
-# Start Foreman with the Procfile.dev
-bundle exec foreman start -f Procfile.dev
+# Default to port 3000 if not specified
+export PORT="${PORT:-3000}"
+
+exec foreman start -f Procfile.dev "$@"
