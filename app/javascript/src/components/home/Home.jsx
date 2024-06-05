@@ -5,9 +5,7 @@ import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
@@ -15,7 +13,6 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Button } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -24,6 +21,7 @@ import LoanTable from "../LoanTable";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import AdminLoanTable from "../admin/AdminLoanTable";
+import AdminTransection from "../admin/AdminTransection";
 
 function Copyright(props) {
   return (
@@ -185,7 +183,7 @@ const HomePage = () => {
                       height: 240,
                     }}
                   />
-                ) }
+                )}
                 {!me?.admin && (
                   <LoanTable
                     sx={{
@@ -219,10 +217,10 @@ const HomePage = () => {
                   </Typography>
                 </Paper>
               </Grid>
-              {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  {/* <Orders /> */}
+                  Transection
+                  <AdminTransection />
                 </Paper>
               </Grid>
             </Grid>

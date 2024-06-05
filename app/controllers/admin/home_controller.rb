@@ -12,16 +12,14 @@ module Admin
     end
 
     def loan_history
-      # @transactions = WalletTransaction.all
       @loans = Loan.all
       render json: LoanSerializer.new(@loans).serializable_hash, status: :ok
     end
-
-    # def loan_history
-    #   @transactions = WalletTransaction.all
-    #   render json: LoanSerializer.new(@loans).serializable_hash, status: :ok
-    # end
-    
+  
+    def transactions_history
+      @transactions = current_user.wallet_transactions
+      render json: WalletTransactionSerializer.new(@transactions).serializable_hash, status: :ok
+    end
     private
 
     def ensure_admin

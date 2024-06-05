@@ -1,20 +1,14 @@
 class LoanController < ApplicationController
   include Loanable
   before_action :authenticate_user!  # Ensure user is logged in
-  before_action :set_loan, only: [:edit, :update]
-  after_action :check_state, only: [:edit, :update]
+  before_action :set_loan, only: [ :update]
+  after_action :check_state, only: [ :update]
 
   def index
-      @loans = current_user.loans
-      render json: LoanSerializer.new(@loans).serializable_hash, status: :ok
+    @loans = current_user.loans
+    render json: LoanSerializer.new(@loans).serializable_hash, status: :ok
   end
 
-  def transactions_history
-    @transactions = current_user.wallet_transactions
-  end
-  def new
-    @loan = Loan.new  
-  end
 
   def create
     @user = current_user
@@ -26,9 +20,6 @@ class LoanController < ApplicationController
     else
       render json: {message: "User couldn't be created successfully. #{@loan.errors.full_messages.to_sentence}"}, status: :unprocessable_entity
     end
-  end
-
-  def edit
   end
 
   def update

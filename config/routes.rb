@@ -13,14 +13,14 @@ Rails.application.routes.draw do
   }
 
   root to: "home#index"
-  resources :loan, only: [:index, :new, :create, :edit, :update]
+  resources :loan, only: [:index, :create, :update]
   get 'profile', to: "users#profile"
 
   namespace :admin do
     # root 'home#index'
+    get 'transactions_history', to: 'home#transactions_history'
     get 'loan_requests', to: "home#loan_requests"
     get 'loan_history', to: "home#loan_history"
-    resources :wallet_transactions, only: [:index]
   end
   get "*path", to: "home#index"
 end
