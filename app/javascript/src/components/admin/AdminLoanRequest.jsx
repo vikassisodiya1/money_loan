@@ -62,19 +62,6 @@ export default function AdminLoanRequest() {
     fetchData();
   }, []);
 
-  const handleSubmit = (event, id, state) => {
-    event.preventDefault(); // Prevent default form submission
-    console.log(id,state)
-    params = {
-      state: state,
-    };
-
-    const fetchData = async () => {
-      const response = await put(`/loan/${id}`, params);
-      navigate("/home");
-    };
-    fetchData();
-  };
 
 
   return (

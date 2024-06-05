@@ -214,7 +214,7 @@ const HomePage = () => {
                     noWrap
                     sx={{ flexGrow: 1 }}
                   >
-                    Wallte Amount
+                    Wallet Amount
                     <Typography>{me?.wallet}</Typography>
                   </Typography>
                 </Paper>

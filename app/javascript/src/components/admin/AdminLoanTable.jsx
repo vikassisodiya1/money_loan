@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,9 +7,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { get } from "../../utils/api";
+import { AuthContext } from "../../context/AuthContext";
+
 let rows = [];
 
-export default function AdminLoanTable() {
+const AdminLoanTable = () => {
+  const { me } = useContext(AuthContext);
   function createData(
     id,
     amount,
@@ -29,23 +32,23 @@ export default function AdminLoanTable() {
       user,
     };
   }
-
+  
   useEffect(() => {
     const fetchData = async () => {
       const response = await get("/admin/loan_history");
       rows = response?.data.map((loan) =>
         createData(
           loan.id,
-          loan.attributes.amount,
-          loan.attributes.interest_rate,
-          loan.attributes.total_loan_amount,
-          loan.attributes.state,
+          loan.amount,
+          loan.interest_rate,
+          loan.total_loan_amount,
+          loan.state,
           loan.attributes.paid,
           loan.attributes.user
         )
       );
+      console.log("rows", rows);
     };
-
     fetchData();
   }, []);
 
@@ -82,5 +85,6 @@ export default function AdminLoanTable() {
       </Table>
     </TableContainer>
   );
-}
+};
 
+export default AdminLoanTable;
