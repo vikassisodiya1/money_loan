@@ -175,9 +175,8 @@ const HomePage = () => {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
-                {me?.admin ? (
+                {me?.admin && (
                   <AdminLoanTable
                     sx={{
                       p: 2,
@@ -186,7 +185,8 @@ const HomePage = () => {
                       height: 240,
                     }}
                   />
-                ) : (
+                ) }
+                {!me?.admin && (
                   <LoanTable
                     sx={{
                       p: 2,
