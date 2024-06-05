@@ -36,10 +36,12 @@ const AuthProvider = ({ children }) => {
     try {
       const response = await axiosInstance.post("/signup", { user: params });
       console.log(response);
-      const { token } = response.headers.authorization;
-      localStorage.setItem("token", token);
-      setAuth(token);
-      window.location.href = "/home";
+      const token = response?.headers?.authorization;
+      if (token.includes('Bearer')){
+        localStorage.setItem("token", token);
+        setAuth(token);
+        window.location.href = "/home";
+      }
     } catch (error) {
       console.error("registrations failed", error);
     }
@@ -51,11 +53,13 @@ const AuthProvider = ({ children }) => {
 
     try {
       const response = await axiosInstance.post("/login", { user: params });
-      const token = response.headers?.authorization;
-
-      localStorage.setItem("token", token);
-      setAuth(token);
-      window.location.href = "/home";
+      const token = response?.headers?.authorization;
+      console.log({"token": token})
+      if (token.includes('Bearer')){
+        localStorage.setItem("token", token);
+        setAuth(token);
+        window.location.href = "/home";
+      }
     } catch (error) {
       console.error("Login failed", error);
     }
