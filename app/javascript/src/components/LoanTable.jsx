@@ -6,12 +6,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { get } from "../utils/api";
+import { get, put } from "../utils/api";
 import BasicModal from "./admin/model";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 let rows = [];
 
 export default function LoanTable() {
+  const navigate = useNavigate();
+
   function createData(
     id,
     amount,
@@ -53,10 +56,7 @@ export default function LoanTable() {
 
   const handleSubmit = (event, id, state) => {
     event.preventDefault(); // Prevent default form submission
-    console.log(id, state);
-    params = {
-      state: state,
-    };
+    const params = { state: state };
 
     const fetchData = async () => {
       const response = await put(`/loan/${id}`, params);
@@ -97,7 +97,7 @@ export default function LoanTable() {
                 {row.state == "open" ? (
                   <Button
                     variant="text"
-                    onClick={(e) => handleSubmit(e, row.id, "open")}
+                    onClick={(e) => handleSubmit(e, row.id, "closed")}
                     color="primary"
                     fullWidth
                   >

@@ -146,7 +146,7 @@ export default function AdminLoanRequest() {
                               <BasicModal
                                 id={row.id}
                                 isDesable={false}
-                                ButtonText={"Approved"}
+                                ButtonText={"Approve"}
                                 NewState={"approved"}
                                 amount={row.amount}
                                 state={row.state}

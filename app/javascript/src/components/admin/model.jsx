@@ -48,7 +48,7 @@ const BasicModal = (props) => {
   return (
     <div>
       <Button variant="text" color="primary" onClick={handleOpen}>
-        Approve
+      {ButtonText}
       </Button>
       <Modal
         open={open}
@@ -79,6 +79,7 @@ const BasicModal = (props) => {
                 id="amount"
                 type="number"
                 value={amount}
+                disabled
                 inputProps={{ min: 100 }}
                 required
                 sx={{ marginBottom: "20px" }}
@@ -96,7 +97,7 @@ const BasicModal = (props) => {
               />
             </FormControl>
             <Button variant="text" type="submit" color="primary" fullWidth>
-              `{ButtonText}`
+              {ButtonText}
             </Button>
             <Button
               variant="text"
