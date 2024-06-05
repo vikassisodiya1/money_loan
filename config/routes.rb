@@ -12,8 +12,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  # root to: "home#index"
-  # resources :home
+  root to: "home#index"
   resources :loan, only: [:index, :new, :create, :edit, :update]
   get 'profile', to: "users#profile"
 
@@ -21,7 +20,6 @@ Rails.application.routes.draw do
     # root 'home#index'
     get 'loan_requests', to: "home#loan_requests"
     get 'loan_history', to: "home#loan_history"
-    # resources :home, only: [:index]  # Use HomeController for admin home page
     resources :wallet_transactions, only: [:index]
   end
   get "*path", to: "home#index"

@@ -19,12 +19,12 @@ const style = {
 };
 
 const BasicModal = (props) => {
+  const { id, amount, state, interest_rate, NewState,isDesable, ButtonText } = props;
   const [open, setOpen] = useState(false);
   const [interestRate, setInterestRate] = useState(interest_rate);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
-  const { id, amount, state, interest_rate, NewState,isDesable, ButtonText } = props;
 
   const handleSubmit = (event, state) => {
     event.preventDefault(); // Prevent default form submission

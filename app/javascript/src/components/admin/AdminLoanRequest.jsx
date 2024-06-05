@@ -156,16 +156,6 @@ export default function AdminLoanRequest() {
                           <TableCell align="right">{row.created}</TableCell>
                           <TableCell align="right">{row.user}</TableCell>
                           <TableCell align="right">
-                            {row.state == "open" ? (
-                              <Button
-                                variant="text"
-                                onClick={(e) => handleSubmit(e, row.id, "open")}
-                                color="primary"
-                                fullWidth
-                              >
-                                Reject
-                              </Button>
-                            ) : (
                               <BasicModal
                                 id={row.id}
                                 isDesable={false}
@@ -176,7 +166,6 @@ export default function AdminLoanRequest() {
                                 created={row.created}
                                 interest_rate={row.interest_rate}
                               />
-                            )}
                           </TableCell>
                         </TableRow>
                       ))}

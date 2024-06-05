@@ -7,7 +7,6 @@ const LoanForm = () => {
   const [amount, setAmount] = useState(0);
   const navigate = useNavigate();
 
-
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission
     const fetchData = async () => {

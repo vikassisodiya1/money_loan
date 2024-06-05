@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { get } from "../utils/api";
 import BasicModal from "./admin/model";
+import { Button } from "@mui/material";
 let rows = [];
 
 export default function LoanTable() {
@@ -50,6 +51,19 @@ export default function LoanTable() {
     fetchData();
   }, []);
 
+  const handleSubmit = (event, id, state) => {
+    event.preventDefault(); // Prevent default form submission
+    console.log(id, state);
+    params = {
+      state: state,
+    };
+
+    const fetchData = async () => {
+      const response = await put(`/loan/${id}`, params);
+      navigate("/home");
+    };
+    fetchData();
+  };
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -79,17 +93,28 @@ export default function LoanTable() {
               <TableCell align="right">{row.paid}</TableCell>
               <TableCell align="right">{row.created}</TableCell>
               <TableCell align="right">
-                {
+                {row.state == "rejected" || row.state == "closed" ? null : null}
+                {row.state == "open" ? (
+                  <Button
+                    variant="text"
+                    onClick={(e) => handleSubmit(e, row.id, "open")}
+                    color="primary"
+                    fullWidth
+                  >
+                    Pay
+                  </Button>
+                ) : null}
+                {row.state == "approved" ? (
                   <BasicModal
                     id={row.id}
                     amount={row.amount}
-                    isDesable ={true}
-                    ButtonText = {'Confirm'}
-                    NewState = {'open'}
+                    isDesable={true}
+                    ButtonText={"Confirm"}
+                    NewState={"open"}
                     state={row.state}
                     interest_rate={row.interest_rate}
                   />
-                }
+                ) : null}
               </TableCell>
             </TableRow>
           ))}
