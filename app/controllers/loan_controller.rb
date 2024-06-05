@@ -33,9 +33,9 @@ class LoanController < ApplicationController
 
   def update
     if @loan.update(loan_params)
-      redirect_to home_index_path(current_user), notice: "Loan updated successfully!"
+      render json: {message: "Loan updated successfully!"}, status: :ok
     else
-      render :edit
+      render json: {message: "User couldn't be created successfully. #{@loan.errors.full_messages.to_sentence}"}, status: :unprocessable_entity
     end
   end
 

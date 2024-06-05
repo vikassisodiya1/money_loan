@@ -26,15 +26,17 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
+import BasicModal from "./model";
 
 let rows = [];
 export default function AdminLoanRequest() {
-  function createData(id, amount, state, user, created) {
+  function createData(id, amount, state, user,interest_rate, created) {
     return {
       id,
       amount,
       state,
       user,
+      interest_rate,
       created,
     };
   }
@@ -45,17 +47,16 @@ export default function AdminLoanRequest() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await get("/admin/loan_requests");
-      console.log(response);
       rows = response?.data.map((loan) =>
         createData(
           loan.id,
           loan.attributes.amount,
           loan.attributes.state,
           loan.attributes.user,
+          loan.attributes.interest_rate,
           loan.attributes.created
         )
       );
-      console.log({ roe: rows });
     };
 
     fetchData();
@@ -139,9 +140,17 @@ export default function AdminLoanRequest() {
                           <TableCell align="right">{row.state}</TableCell>
                           <TableCell align="right">{row.created}</TableCell>
                           <TableCell align="right">{row.user}</TableCell>
-                          <Button color="inherit" variant="text">
-                            Approve`
-                          </Button>
+                          <TableCell align="right">
+                            {
+                              <BasicModal
+                                id={row.id}
+                                amount = {row.amount}
+                                state={row.state}
+                                created={row.created}
+                                interest_rate = {row.interest_rate}
+                              />
+                            }
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

@@ -61,13 +61,6 @@ export default function Register() {
     event.preventDefault();
 
     register(firstName,lastName, email,password,isAdmin)
-    console.log({
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      isAdmin: isAdmin,
-    });
   };
 
   return (

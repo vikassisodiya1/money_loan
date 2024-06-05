@@ -41,11 +41,6 @@ export default function LogIn() {
     event.preventDefault();
 
     login(email,password,rememberMe)
-    console.log({
-      email: email,
-      password: password,
-      remember: rememberMe,
-    });
   };
 
   return (

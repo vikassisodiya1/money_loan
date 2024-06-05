@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import { get } from "../../utils/api";
 let rows = [];
 
-export default function AdminLoanTable() {
+export default function AdminTransection() {
   function createData(
     id,
     amount,
@@ -83,4 +83,3 @@ export default function AdminLoanTable() {
     </TableContainer>
   );
 }
-

@@ -33,7 +33,6 @@ export default function LoanTable() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await get("/loan");
-      console.log(response);
       rows = response?.data.map((loan) =>
         createData(
           loan.id,

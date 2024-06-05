@@ -25,7 +25,6 @@ const LoanForm = () => {
           <FormLabel htmlFor="amount">Loan Amount:</FormLabel>
           <TextField
             id="amount"
-            label="Loan Amount"
             type="number"
             value={amount}
             onChange={(event) => setAmount(event.target.value)}
