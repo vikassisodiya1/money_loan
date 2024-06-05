@@ -4,12 +4,14 @@ class LoanController < ApplicationController
   before_action :set_loan, only: [:edit, :update]
   after_action :check_state, only: [:edit, :update]
 
-
   def index
       @loans = current_user.loans
-      @transactions = current_user.wallet_transactions
+      render json: LoanSerializer.new(@loans).serializable_hash, status: :ok
   end
 
+  def transactions_history
+    @transactions = current_user.wallet_transactions
+  end
   def new
     @loan = Loan.new  
   end
@@ -20,9 +22,9 @@ class LoanController < ApplicationController
     @loan.user = current_user  # Assign loan to the current user
   
     if @loan.save
-      redirect_to home_index_path(current_user), notice: "Loan request submitted successfully!"
+      render json: {message: "Loan request submitted successfully!"}, status: :created
     else
-      render :new
+      render json: {message: "User couldn't be created successfully. #{@loan.errors.full_messages.to_sentence}"}, status: :unprocessable_entity
     end
   end
 

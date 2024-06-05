@@ -5,10 +5,6 @@ import { Navigate } from 'react-router-dom/dist';
 
 const PrivateRoute = ({ children }) => {
   const { auth } = useContext(AuthContext);
-  // <Redirect to={'/' + (
-  //   id ? getUserPath(client, me) : loginPath
-  // )}/>
-
   return auth ? children : <Navigate to="/log_in" />;
 };
 

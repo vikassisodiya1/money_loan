@@ -20,6 +20,9 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Button } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { AuthContext } from "../../context/AuthContext";
+import LoanTable from "../LoanTable";
+import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -31,7 +34,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        money_loan
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -88,16 +91,16 @@ const Drawer = styled(MuiDrawer, {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function HomePage() {
-  const [open, setOpen] = React.useState(true);
+const HomePage = () => {
+  const [open, setOpen] = React.useState(false);
   const { logout } = React.useContext(AuthContext);
-
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
+  };
+  const handleLoanRequest = () => {
+    navigate("/new_loan");
   };
 
   return (
@@ -131,6 +134,9 @@ export default function HomePage() {
             >
               Dashboard
             </Typography>
+            <Button color="inherit" variant="text" onClick={handleLoanRequest}>
+              <AddIcon />
+            </Button>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -141,26 +147,6 @@ export default function HomePage() {
             </Button>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List component="nav">
-            {/* {mainListItems} */}
-            <Divider sx={{ my: 1 }} />
-            {/* {secondaryListItems} */}
-          </List>
-        </Drawer>
         <Box
           component="main"
           sx={{
@@ -178,17 +164,14 @@ export default function HomePage() {
             <Grid container spacing={3}>
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
-                <Paper
+                <LoanTable
                   sx={{
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
                     height: 240,
                   }}
-                >
-                  {/* <Chart />
-                   */}
-                </Paper>
+                />
               </Grid>
               {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}>
@@ -200,7 +183,15 @@ export default function HomePage() {
                     height: 240,
                   }}
                 >
-                  {/* <Deposits /> */}
+                  <Typography
+                    component="h1"
+                    variant="h5"
+                    color="inherit"
+                    noWrap
+                    sx={{ flexGrow: 1 }}
+                  >
+                    Wallte Amount
+                  </Typography>
                 </Paper>
               </Grid>
               {/* Recent Orders */}
@@ -216,4 +207,6 @@ export default function HomePage() {
       </Box>
     </ThemeProvider>
   );
-}
+};
+
+export default HomePage;
