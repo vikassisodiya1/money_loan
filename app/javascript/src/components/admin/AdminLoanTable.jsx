@@ -13,15 +13,7 @@ let rows = [];
 
 const AdminLoanTable = () => {
   const { me } = useContext(AuthContext);
-  function createData(
-    id,
-    amount,
-    interest_rate,
-    total_loan_amount,
-    state,
-    paid,
-    user
-  ) {
+  function createData(id, amount, interest_rate, total_loan_amount, state, paid, user) {
     return {
       id,
       amount,
@@ -39,15 +31,14 @@ const AdminLoanTable = () => {
       rows = response?.data.map((loan) =>
         createData(
           loan.id,
-          loan.amount,
-          loan.interest_rate,
-          loan.total_loan_amount,
-          loan.state,
+          loan.attributes.amount,
+          loan.attributes.interest_rate,
+          loan.attributes.total_loan_amount,
+          loan.attributes.state,
           loan.attributes.paid,
           loan.attributes.user
         )
       );
-      console.log("rows", rows);
     };
     fetchData();
   }, []);
