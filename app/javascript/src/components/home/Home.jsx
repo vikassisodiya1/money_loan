@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -23,6 +23,7 @@ import { AuthContext } from "../../context/AuthContext";
 import LoanTable from "../LoanTable";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
+import AdminLoanTable from "../admin/AdminLoanTable";
 
 function Copyright(props) {
   return (
@@ -92,15 +93,20 @@ const Drawer = styled(MuiDrawer, {
 const defaultTheme = createTheme();
 
 const HomePage = () => {
-  const [open, setOpen] = React.useState(false);
-  const { logout } = React.useContext(AuthContext);
+  const [open, setOpen] = useState(false);
+  const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const { me } = useContext(AuthContext);
 
   const handleLogout = () => {
     logout();
   };
-  const handleLoanRequest = () => {
+  const handleNewLoanRequest = () => {
     navigate("/new_loan");
+  };
+  const handleLoanRequest = () => {
+    navigate("/requests");
   };
 
   return (
@@ -117,7 +123,6 @@ const HomePage = () => {
               edge="start"
               color="inherit"
               aria-label="open drawer"
-              onClick={toggleDrawer}
               sx={{
                 marginRight: "36px",
                 ...(open && { display: "none" }),
@@ -134,14 +139,22 @@ const HomePage = () => {
             >
               Dashboard
             </Typography>
-            <Button color="inherit" variant="text" onClick={handleLoanRequest}>
-              <AddIcon />
-            </Button>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+
+            {me?.admin ? (
+              <IconButton color="inherit" onClick={handleLoanRequest}>
+                <Badge badgeContent={4} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            ) : (
+              <Button
+                color="inherit"
+                variant="text"
+                onClick={handleNewLoanRequest}
+              >
+                <AddIcon />
+              </Button>
+            )}
             <Button color="inherit" variant="text" onClick={handleLogout}>
               <LogoutIcon />
             </Button>
@@ -164,14 +177,25 @@ const HomePage = () => {
             <Grid container spacing={3}>
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
-                <LoanTable
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                />
+                {me?.admin ? (
+                  <AdminLoanTable
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      height: 240,
+                    }}
+                  />
+                ) : (
+                  <LoanTable
+                    sx={{
+                      p: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      height: 240,
+                    }}
+                  />
+                )}
               </Grid>
               {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}>
@@ -191,6 +215,7 @@ const HomePage = () => {
                     sx={{ flexGrow: 1 }}
                   >
                     Wallte Amount
+                    <Typography>{me?.wallet}</Typography>
                   </Typography>
                 </Paper>
               </Grid>

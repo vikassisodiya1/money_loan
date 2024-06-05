@@ -45,8 +45,15 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'devise'
+gem 'rack-cors'
+gem 'devise-jwt'
+gem 'jsonapi-serializer'
+
 gem 'sidekiq'
 gem 'sidekiq-cron'
+gem 'jsbundling-rails'
+gem 'pg'
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

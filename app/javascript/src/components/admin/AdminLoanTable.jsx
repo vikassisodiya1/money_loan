@@ -6,10 +6,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { get } from "../utils/api";
+import { get } from "../../utils/api";
 let rows = [];
 
-export default function LoanTable() {
+export default function AdminLoanTable() {
   function createData(
     id,
     amount,
@@ -17,7 +17,7 @@ export default function LoanTable() {
     total_loan_amount,
     state,
     paid,
-    created
+    user
   ) {
     return {
       id,
@@ -26,13 +26,13 @@ export default function LoanTable() {
       total_loan_amount,
       state,
       paid,
-      created,
+      user,
     };
   }
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await get("/loan");
+      const response = await get("/admin/loan_history");
       console.log(response);
       rows = response?.data.map((loan) =>
         createData(
@@ -42,9 +42,10 @@ export default function LoanTable() {
           loan.attributes.total_loan_amount,
           loan.attributes.state,
           loan.attributes.paid,
-          loan.attributes.created
+          loan.attributes.user
         )
       );
+      console.log(rows);
     };
 
     fetchData();
@@ -60,8 +61,7 @@ export default function LoanTable() {
             <TableCell align="right">Total Loan Amount</TableCell>
             <TableCell align="right">State</TableCell>
             <TableCell align="right">Paid</TableCell>
-            <TableCell align="right">Created At</TableCell>
-            <TableCell align="right">Actions</TableCell>
+            <TableCell align="right">User</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -77,7 +77,7 @@ export default function LoanTable() {
               <TableCell align="right">{row.total_loan_amount}</TableCell>
               <TableCell align="right">{row.state}</TableCell>
               <TableCell align="right">{row.paid}</TableCell>
-              <TableCell align="right">{row.created}</TableCell>
+              <TableCell align="right">{row.user}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -85,3 +85,4 @@ export default function LoanTable() {
     </TableContainer>
   );
 }
+

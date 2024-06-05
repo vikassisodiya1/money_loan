@@ -6,13 +6,12 @@ api.interceptors.request.use(
   (config) => {
     // You can modify the request configuration here (e.g., add authorization tokens)
     const token = localStorage.getItem("token");
-    if (token) {
+    if (token && token.includes('Bearer')){
       config.headers.Authorization = token;
     }
     return config;
   },
   (error) => {
-    console.log(error);
     return Promise.reject(error);
   }
 );

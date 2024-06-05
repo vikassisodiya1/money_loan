@@ -10,18 +10,16 @@ const AuthProvider = ({ children }) => {
   const [me, setMe] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setAuth(token);
-    }
-
     const fetchData = async () => {
       const response = await get("/profile");
       console.log(response.data.attributes);
       setMe(response.data.attributes);
     };
-
     fetchData();
+    const token = localStorage.getItem("token");
+    if (token) {
+      setAuth(token);
+    }
   }, []);
 
   const register = async (firstName, lastName, email, password, isAdmin) => {
@@ -40,6 +38,7 @@ const AuthProvider = ({ children }) => {
       if (token.includes('Bearer')){
         localStorage.setItem("token", token);
         setAuth(token);
+        setMe(response?.data?.data);
         window.location.href = "/home";
       }
     } catch (error) {
@@ -54,9 +53,9 @@ const AuthProvider = ({ children }) => {
     try {
       const response = await axiosInstance.post("/login", { user: params });
       const token = response?.headers?.authorization;
-      console.log({"token": token})
       if (token.includes('Bearer')){
         localStorage.setItem("token", token);
+        setMe(response?.data?.data);
         setAuth(token);
         window.location.href = "/home";
       }

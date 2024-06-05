@@ -8,12 +8,19 @@ module Admin
     
     def loan_requests
       @loan_requests = Loan.all.requested
+      render json: LoanSerializer.new(@loan_requests).serializable_hash, status: :ok
     end
 
     def loan_history
+      # @transactions = WalletTransaction.all
       @loans = Loan.all
-      @transactions = WalletTransaction.all
+      render json: LoanSerializer.new(@loans).serializable_hash, status: :ok
     end
+
+    # def loan_history
+    #   @transactions = WalletTransaction.all
+    #   render json: LoanSerializer.new(@loans).serializable_hash, status: :ok
+    # end
     
     private
 
