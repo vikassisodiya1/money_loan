@@ -18,18 +18,13 @@ const style = {
   p: 4,
 };
 
-const BasicModal = ({
-  id: id,
-  amount: amount,
-  state: state,
-  created: created,
-  interest_rate: interest_rate,
-}) => {
+const BasicModal = (props) => {
   const [open, setOpen] = useState(false);
   const [interestRate, setInterestRate] = useState(interest_rate);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
+  const { id, amount, state, interest_rate, NewState,isDesable, ButtonText } = props;
 
   const handleSubmit = (event, state) => {
     event.preventDefault(); // Prevent default form submission
@@ -45,7 +40,7 @@ const BasicModal = ({
     }
     const fetchData = async () => {
       const response = await put(`/loan/${id}`, params);
-      navigate('/home')
+      navigate("/home");
     };
     fetchData();
   };
@@ -75,16 +70,15 @@ const BasicModal = ({
           }}
         >
           <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
-            Request Loan
+            Loan Request Status
           </h1>
-          <form onSubmit={(e) => handleSubmit(e, "approved")}>
+          <form onSubmit={(e) => handleSubmit(e, `${NewState}`)}>
             <FormControl fullWidth margin="normal">
               <FormLabel htmlFor="amount">Loan Amount:</FormLabel>
               <TextField
                 id="amount"
                 type="number"
                 value={amount}
-                disabled
                 inputProps={{ min: 100 }}
                 required
                 sx={{ marginBottom: "20px" }}
@@ -94,6 +88,7 @@ const BasicModal = ({
                 id="interest_rate"
                 type="number"
                 value={interestRate}
+                disabled={isDesable}
                 onChange={(event) => setInterestRate(event.target.value)}
                 inputProps={{ min: 1, step: 0.01 }}
                 required
@@ -101,7 +96,7 @@ const BasicModal = ({
               />
             </FormControl>
             <Button variant="text" type="submit" color="primary" fullWidth>
-              Approve
+              `{ButtonText}`
             </Button>
             <Button
               variant="text"

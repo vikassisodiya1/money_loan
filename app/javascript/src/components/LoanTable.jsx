@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { get } from "../utils/api";
+import BasicModal from "./admin/model";
 let rows = [];
 
 export default function LoanTable() {
@@ -77,6 +78,19 @@ export default function LoanTable() {
               <TableCell align="right">{row.state}</TableCell>
               <TableCell align="right">{row.paid}</TableCell>
               <TableCell align="right">{row.created}</TableCell>
+              <TableCell align="right">
+                {
+                  <BasicModal
+                    id={row.id}
+                    amount={row.amount}
+                    isDesable ={true}
+                    ButtonText = {'Confirm'}
+                    NewState = {'open'}
+                    state={row.state}
+                    interest_rate={row.interest_rate}
+                  />
+                }
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

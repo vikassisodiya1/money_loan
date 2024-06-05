@@ -30,7 +30,7 @@ import BasicModal from "./model";
 
 let rows = [];
 export default function AdminLoanRequest() {
-  function createData(id, amount, state, user,interest_rate, created) {
+  function createData(id, amount, state, user, interest_rate, created) {
     return {
       id,
       amount,
@@ -61,6 +61,21 @@ export default function AdminLoanRequest() {
 
     fetchData();
   }, []);
+
+  const handleSubmit = (event, id, state) => {
+    event.preventDefault(); // Prevent default form submission
+    console.log(id,state)
+    params = {
+      state: state,
+    };
+
+    const fetchData = async () => {
+      const response = await put(`/loan/${id}`, params);
+      navigate("/home");
+    };
+    fetchData();
+  };
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -141,15 +156,27 @@ export default function AdminLoanRequest() {
                           <TableCell align="right">{row.created}</TableCell>
                           <TableCell align="right">{row.user}</TableCell>
                           <TableCell align="right">
-                            {
+                            {row.state == "open" ? (
+                              <Button
+                                variant="text"
+                                onClick={(e) => handleSubmit(e, row.id, "open")}
+                                color="primary"
+                                fullWidth
+                              >
+                                Reject
+                              </Button>
+                            ) : (
                               <BasicModal
                                 id={row.id}
-                                amount = {row.amount}
+                                isDesable={false}
+                                ButtonText={"Approved"}
+                                NewState={"approved"}
+                                amount={row.amount}
                                 state={row.state}
                                 created={row.created}
-                                interest_rate = {row.interest_rate}
+                                interest_rate={row.interest_rate}
                               />
-                            }
+                            )}
                           </TableCell>
                         </TableRow>
                       ))}
